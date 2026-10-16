@@ -620,8 +620,8 @@ The proposed system will use three deterministic processes:
   \item \textbf{Idempotent Daily Logging Algorithm:} When a daily log payload is received for user $U$ and calendar date $D$, the system queries \texttt{workoutplans} for the tuple $(U, D)$. The API will use the composite unique key and a transactional upsert to prevent duplicate records. The record will include or reference the applicable target values from \texttt{exercise\_data}.
 \end{enumerate}
 
-\section{Audit and Data Lifecycle Design}
-The proposed records will carry creation and update timestamps. Authentication failures and application errors may be recorded as operational events, but passwords, password hashes, and bearer tokens shall not be written to logs. A retention and account-deletion policy will be defined before any deployment involving real user data.
+% \section{Audit and Data Lifecycle Design}
+% The proposed records will carry creation and update timestamps. Authentication failures and application errors may be recorded as operational events, but passwords, password hashes, and bearer tokens shall not be written to logs. A retention and account-deletion policy will be defined before any deployment involving real user data.
 
 \section{Core Data Structures}
 Table~\ref{tab:structures} outlines the primary data structures across the application layers.
@@ -717,25 +717,25 @@ Figure~\ref{fig:pert} models the task dependencies and precedence constraints. T
 \label{fig:pert}
 \end{figure}
 
-\section{Risk Assessment and Mitigation Strategies}
-Table~\ref{tab:risks} identifies anticipated technical risks and establishes proactive mitigation measures.
+% \section{Risk Assessment and Mitigation Strategies}
+% Table~\ref{tab:risks} identifies anticipated technical risks and establishes proactive mitigation measures.
 
-\begin{table}[htbp]
-\centering
-\caption{Project Technical Risks and Proactive Engineering Mitigations}
-\label{tab:risks}
-\begin{tabularx}{\linewidth}{P{0.24\linewidth}P{0.28\linewidth}Y}
-\toprule
-\textbf{Identified Technical Risk} & \textbf{Potential Impact} & \textbf{Proactive Mitigation Strategy} \\
-\midrule
-Plaintext credential exposure & Unauthorized credential compromise and database breach vulnerability. & Implement bcrypt hashing with a benchmarked work factor of at least 10; use dedicated response DTOs that omit password fields. \\
-Cross-account authorization bypass & Unauthorized users reading or modifying other users' profiles/logs. & Enforce token-bound subject extraction; verify that path identifiers strictly match authenticated token claims. \\
-Midnight calendar boundary drift & Metrics recorded under incorrect calendar date when session spans midnight. & Standardize date generation at request time using explicit ISO-8601 UTC date parsing in business logic. \\
-Unsanitized input injection & Malformed payloads causing SQL errors or database corruption. & Implement strict server-side JSON schema validation, non-negative bounds checks, and parameterized GORM queries. \\
-Schema migration regressions & Loss of referential integrity or broken table states during iterations. & Maintain structured, repeatable database migration scripts and automated Docker seeding fixtures. \\
-\bottomrule
-\end{tabularx}
-\end{table}
+% \begin{table}[htbp]
+% \centering
+% \caption{Project Technical Risks and Proactive Engineering Mitigations}
+% \label{tab:risks}
+% \begin{tabularx}{\linewidth}{P{0.24\linewidth}P{0.28\linewidth}Y}
+% \toprule
+% \textbf{Identified Technical Risk} & \textbf{Potential Impact} & \textbf{Proactive Mitigation Strategy} \\
+% \midrule
+% Plaintext credential exposure & Unauthorized credential compromise and database breach vulnerability. & Implement bcrypt hashing with a benchmarked work factor of at least 10; use dedicated response DTOs that omit password fields. \\
+% Cross-account authorization bypass & Unauthorized users reading or modifying other users' profiles/logs. & Enforce token-bound subject extraction; verify that path identifiers strictly match authenticated token claims. \\
+% Midnight calendar boundary drift & Metrics recorded under incorrect calendar date when session spans midnight. & Standardize date generation at request time using explicit ISO-8601 UTC date parsing in business logic. \\
+% Unsanitized input injection & Malformed payloads causing SQL errors or database corruption. & Implement strict server-side JSON schema validation, non-negative bounds checks, and parameterized GORM queries. \\
+% Schema migration regressions & Loss of referential integrity or broken table states during iterations. & Maintain structured, repeatable database migration scripts and automated Docker seeding fixtures. \\
+% \bottomrule
+% \end{tabularx}
+% \end{table}
 
 % -----------------------------------------------------------------------------
 % Chapter 9: Network Architecture and Security Design
@@ -748,12 +748,12 @@ Figure~\ref{fig:network} models the network topology and trust boundaries. The f
 \begin{figure}[htbp]
 \centering
 \resizebox{0.92\linewidth}{!}{
-\begin{tikzpicture}[node distance=1.8cm and 2cm]
+\begin{tikzpicture}[node distance=1.8cm and 4cm]
 \node[entity] (browser) {Client Browser\\Static Frontend\\Host Port :8081};
 \node[process,right=of browser,minimum width=3.3cm] (api) {Go HTTP API\\ServeMux / JWT\\Host Port :8080};
 \node[store,right=of api,minimum width=3.2cm] (pg) {PostgreSQL 16\\Isolated Container\\Port :5432 / Host :5433};
-\draw[flow] (browser) -- node[above,align=center,font=\scriptsize]{JSON over HTTP/S\\Bearer JWT Token} (api);
-\draw[softflow] (api) -- node[above,align=center,font=\scriptsize]{SQL over private network\\TLS configured in deployment} (pg);
+\draw[flow] (browser) -- node[midway,align=center,font=\scriptsize]{JSON over HTTP/S\\Bearer JWT Token} (api);
+\draw[softflow] (api) -- node[midway,align=center,font=\scriptsize]{SQL over private network\\TLS configured in deployment} (pg);
 \node[draw=red,dashed,rounded corners,fit=(browser)(api),inner sep=0.35cm,label=above:{\small Application Trust Boundary}] {};
 \node[draw=ink,dashed,rounded corners,fit=(pg),inner sep=0.35cm,label=below:{\small Data Persistence Boundary}] {};
 \end{tikzpicture}}
@@ -776,7 +776,7 @@ The planned security controls are organized across distinct architectural layers
 % -----------------------------------------------------------------------------
 \chapter{Future Scope, Expected Outcomes, and Conclusion}
 
-\section{Future Scope and Long-Term Roadmap}
+\section{Future Scope }
 Upon completion and evaluation of the primary deliverables, potential future enhancements include:
 \begin{enumerate}
   \item \textbf{Wearable IoT Telemetry Integration:} Incorporating direct Bluetooth Low Energy (BLE) synchronization with smartwatches and fitness bands.
@@ -796,10 +796,10 @@ The planned project deliverables are:
   \item Comprehensive technical documentation and a final project report detailing system evaluation.
 \end{itemize}
 
-\section{Conclusion and Approval Appeal}
+\section{Conclusion}
 The Formwell personal fitness tracking and activity monitoring system represents a well-conceived, technically viable, and academically sound project. By addressing the fragmentation of personal fitness tracking through a cohesive web architecture, compiled Go API, and normalized PostgreSQL persistence, the system demonstrates key competencies in full-stack software engineering, relational database design, and web security.
 
-Formwell is proposed as a focused web information system for fitness-related self-logging and plan review. The project will produce an integrated implementation and an evaluation of its functional behavior, data integrity, and security controls. This synopsis is submitted to the project review committee and faculty guide with a request for approval to proceed.
+Formwell is proposed as a focused web information system for fitness-related self-logging and plan review. The project will produce an integrated implementation and an evaluation of its functional behavior, data integrity, and security controls.
 
 % -----------------------------------------------------------------------------
 % Bibliography
