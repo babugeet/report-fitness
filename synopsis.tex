@@ -10,6 +10,7 @@
 \usepackage{array}
 \usepackage{amsmath}
 \usepackage{xcolor}
+\pagecolor{white}
 \usepackage{enumitem}
 \usepackage{tikz}
 \usepackage{xurl}
@@ -63,11 +64,16 @@
 
 \tikzset{
   entity/.style={draw=ink,fill=pale,rounded corners=2pt,align=center,minimum width=2.6cm,minimum height=0.8cm,font=\small},
+  dfdentity/.style={draw=ink,fill=pale,rectangle,align=center,minimum width=2.6cm,minimum height=0.8cm,font=\small},
   process/.style={draw=green,fill=green!8,rounded corners=4pt,align=center,minimum width=2.8cm,minimum height=0.9cm,font=\small},
-  store/.style={draw=ink,fill=white,align=center,minimum width=2.6cm,minimum height=0.8cm,font=\small},
+  store/.style={draw=none,fill=white,align=center,minimum width=2.6cm,minimum height=0.8cm,font=\small,append after command={\pgfextra{\draw[ink] (\tikzlastnode.north west) -- (\tikzlastnode.north east);\draw[ink] (\tikzlastnode.south west) -- (\tikzlastnode.south east);}}},
+  activityaction/.style={draw=green,fill=green!8,rounded corners=3pt,align=center,minimum width=3.2cm,minimum height=0.8cm,font=\scriptsize},
+  activitydecision/.style={draw=ink,fill=white,diamond,aspect=2,align=center,inner sep=1pt,font=\scriptsize},
+  umlstate/.style={draw=green,fill=green!8,rounded corners=8pt,align=center,minimum width=2.8cm,minimum height=0.9cm,font=\scriptsize},
   relation/.style={-{Latex[length=2.2mm]},draw=ink,thick},
   flow/.style={-{Latex[length=2mm]},draw=green!80!black,thick},
   softflow/.style={-{Latex[length=2mm]},draw=ink!70,thick},
+  flowlabel/.style={font=\footnotesize,align=center,text=ink,fill=white,inner sep=2pt},
   uml/.style={draw=ink,fill=white,rounded corners=2pt,align=left,font=\scriptsize,inner sep=5pt},
   state/.style={draw=green,fill=green!8,rounded corners=6pt,align=center,minimum width=2.5cm,minimum height=0.8cm,font=\small}
 }
@@ -77,36 +83,36 @@
 % -----------------------------------------------------------------------------
 % Title Page
 % -----------------------------------------------------------------------------
-\begin{titlepage}
-\centering
-\vspace*{1.0cm}
-{\Large\bfseries PROJECT PROPOSAL SYNOPSIS\par}
-\vspace{1.2cm}
-{\Huge\bfseries\color{green} Formwell\par}
-\vspace{0.35cm}
-{\LARGE\bfseries Personal Fitness Tracking and Activity Monitoring System\par}
-\vspace{1.0cm}
-{\large A project proposal synopsis submitted in partial fulfilment of the requirements for the award of the degree of\par}
-\vspace{0.3cm}
-{\large\bfseries [Program / Degree Name]\par}
-\vspace{0.2cm}
-{\large in\par}
-\vspace{0.2cm}
-{\large\bfseries [Branch / Specialization, e.g., Computer Science and Engineering]\par}
-\vspace{0.25cm}
-{\small This synopsis is submitted to the Project Review Committee and faculty guide with a request for approval to undertake the proposed design, implementation, and evaluation.\par}
-\vfill
-\begin{tabular}{>{\bfseries}rl}
-Submitted by: & [Student Name] \\
-Register / Roll No.: & [Registration Number] \\
-Project Guide: & [Guide Name and Designation] \\
-Department: & [Department of Computer Science and Engineering] \\
-Institution: & [Institution / College Name] \\
-Academic Year: & [Academic Year, e.g., 2026--2027] \\
-\end{tabular}
-\vfill
-{\large October 2026\par}
-\end{titlepage}
+% \begin{titlepage}
+% \centering
+% \vspace*{1.0cm}
+% {\Large\bfseries PROJECT PROPOSAL SYNOPSIS\par}
+% \vspace{1.2cm}
+% {\Huge\bfseries\color{green} Formwell\par}
+% \vspace{0.35cm}
+% {\LARGE\bfseries Personal Fitness Tracking and Activity Monitoring System\par}
+% \vspace{1.0cm}
+% {\large A project proposal synopsis submitted in partial fulfilment of the requirements for the award of the degree of\par}
+% \vspace{0.3cm}
+% {\large\bfseries [Program / Degree Name]\par}
+% \vspace{0.2cm}
+% {\large in\par}
+% \vspace{0.2cm}
+% {\large\bfseries [Branch / Specialization, e.g., Computer Science and Engineering]\par}
+% \vspace{0.25cm}
+% {\small This synopsis is submitted to the Project Review Committee and faculty guide with a request for approval to undertake the proposed design, implementation, and evaluation.\par}
+% \vfill
+% \begin{tabular}{>{\bfseries}rl}
+% Submitted by: & [Student Name] \\
+% Register / Roll No.: & [Registration Number] \\
+% Project Guide: & [Guide Name and Designation] \\
+% Department: & [Department of Computer Science and Engineering] \\
+% Institution: & [Institution / College Name] \\
+% Academic Year: & [Academic Year, e.g., 2026--2027] \\
+% \end{tabular}
+% \vfill
+% {\large October 2026\par}
+% \end{titlepage}
 
 % -----------------------------------------------------------------------------
 % Preliminary Pages
@@ -139,8 +145,7 @@ People who exercise independently may use separate tools to keep profile details
 
 The \textbf{Formwell} project proposes a browser application that brings profile baselines, curated routines, meal-plan content, and daily activity logs into one interface. The planned architecture separates the browser frontend, Go HTTP API, and PostgreSQL persistence layer. Performance and reliability will be evaluated against defined workloads during development.
 
-The planned capabilities include account registration and sign-in, a profile baseline with BMI, rule-based selection of cardio, strength, and meal-plan content, daily water and step entry, exercise progress logging, and review of activity by selected date. The design specifies adaptive password hashing, signed JWT bearer authentication, token-derived authorization, strict server-side validation, and minimal profile responses. The project is intended as an academic information system and personal logging tool; its suggested plans will not be presented as clinical guidance.
-
+The planned capabilities include account registration and sign-in, a profile baseline with BMI, rule-based selection of cardio, strength, and meal-plan content, daily water and step entry, exercise progress logging, and review of activity by selected date. The design specifies adaptive password hashing, signed JWT bearer authentication, token-derived authorization, strict server-side validation, and minimal profile responses. 
 \section{Problem Statement}
 A person who records activity across separate tools may find it difficult to connect daily measurements with suggested routines or review earlier entries. Formwell will provide one account-based workflow for profile details, predefined plans, daily measurements, and selected-date summaries. The system will validate inputs, enforce user ownership, and preserve one daily record per user and date.
 
@@ -298,80 +303,132 @@ Containerization & Docker \& Docker Compose & Reproducible local database setup;
 \section{Hardware and Software Requirements}
 \begin{itemize}
   \item \textbf{Development System Baseline:} 64-bit multi-core processor (x86-64 or Apple Silicon ARM64), 8 GB RAM, 10 GB available SSD storage, macOS 14+, Ubuntu 22.04 LTS, or Windows 11 with WSL2.
-  \item \textbf{Software Development Environment:} Go SDK 1.22 or higher, Docker Engine 24+ and Docker Compose v2, Git version control, Visual Studio Code / GoLand, and standard web browsers.
-  \item \textbf{Target Deployment Environment:} Linux container host (Ubuntu Server / Alpine Linux container), Docker runtime, reverse proxy with TLS termination (Nginx / Caddy), persistent PostgreSQL volume.
+  \item \textbf{Software Development Environment:} Go SDK 1.22 or higher, Docker Engine 24+ and Docker Compose v2, Git version control, Visual Studio Code , and standard web browsers.
+  \item \textbf{Target Deployment Environment:} Linux container host (Ubuntu Server / Alpine Linux container), Docker runtime, persistent PostgreSQL volume.
 \end{itemize}
 
 \section{System Architecture and Data Flow Models}
-The proposed system will use a three-tier client-server architecture comprising the browser presentation layer, Go application layer, and PostgreSQL persistence layer.
+The proposed system will use a three-tier client-server architecture comprising the browser presentation layer, Go application layer, and PostgreSQL persistence layer. The DFDs use standard data-flow notation: rectangular external entities, numbered rounded-rectangle processes, labeled directed data flows, and D1--D3 data stores.
 
 \begin{figure}[htbp]
 \centering
 \resizebox{0.92\linewidth}{!}{
-\begin{tikzpicture}[node distance=2.4cm]
-\node[entity] (user) {Athlete / User};
-\node[process,right=of user,minimum width=4cm] (app) {Formwell Fitness Tracking System\\(Go HTTP API \& Web UI)};
-\node[store,right=of app,minimum width=3.3cm] (db) {PostgreSQL 16\\Database};
-\draw[flow] (user) -- node[above,align=center,font=\scriptsize]{Profile registration, credentials,\\and daily activity logs} (app);
-\draw[softflow] (app) -- node[below,align=center,font=\scriptsize]{Personalized plans, profile,\\and progress reports} (user);
-\draw[flow] (app) -- node[above,align=center,font=\scriptsize]{SQL queries and writes\\via GORM ORM} (db);
-\draw[softflow] (db) -- node[below,align=center,font=\scriptsize]{Profiles, schedule lookups,\\and daily activity rows} (app);
+\begin{tikzpicture}[node distance=3.2cm]
+\node[dfdentity] (user) {Athlete / User};
+\node[process,right=of user,minimum width=4.6cm] (system) {0\quad Formwell Fitness Tracking System};
+\draw[flow] (user) -- node[above,text width=2.4cm,align=center,flowlabel]{Requests} (system);
+\draw[softflow] (system) -- node[below,text width=2.4cm,align=center,flowlabel]{Profiles, plans, summaries} (user);
 \end{tikzpicture}}
 \caption{Level-0 Context Data Flow Diagram (DFD).}
 \label{fig:dfd0}
 \end{figure}
 
-The Level-1 DFD (Figure~\ref{fig:dfd1} decomposes the proposed Formwell system into three processes: authentication and profile management (1.0), plan selection and catalogue retrieval (2.0), and daily activity logging and history review (3.0).
+The Level-1 DFD (Figure~\ref{fig:dfd1}) decomposes process 0 into authentication and profile management (1.0), plan retrieval (2.0), and daily activity logging and history review (3.0). The user symbol is repeated for layout clarity; each copy represents the same external entity. Every data store exchanges data through a process, with no direct store-to-store flows.
 
 \begin{figure}[htbp]
 \centering
 \resizebox{\linewidth}{!}{
-\begin{tikzpicture}[node distance=1.5cm and 1.8cm]
-\node[entity] (u) {User / Browser};
-\node[process,right=of u,yshift=1.65cm] (auth) {1.0\\Authentication \&\\Profile Inception};
-\node[process,right=of u] (plan) {2.0\\Plan Allocation\\\& Catalog Engine};
-\node[process,right=of u,yshift=-1.65cm] (log) {3.0\\Daily Logging\\\& History Review};
-\node[store,right=of plan,xshift=1.45cm,yshift=1.2cm] (users) {D1\\user\_database};
-\node[store,right=of plan,xshift=1.45cm] (plans) {D2\\Plan \& Catalog\\Tables};
-\node[store,right=of plan,xshift=1.45cm,yshift=-1.2cm] (logs) {D3\\workoutplans};
-\node[entity,right=of plans,xshift=1.5cm] (screens) {Dashboard, Plans,\\Stats \& Reports};
-\draw[flow] (u) -- node[above,sloped,font=\scriptsize]{Credentials / Profile} (auth);
-\draw[softflow] (auth) -- node[below,sloped,font=\scriptsize]{Token / Baseline} (u);
-\draw[flow] (auth) -- (users);
-\draw[flow] (u) -- node[above,sloped,font=\scriptsize]{Plan Request} (plan);
-\draw[flow] (plan) -- (plans);
-\draw[softflow] (plans) -- (plan);
-\draw[softflow] (plan) -- (screens);
-\draw[flow] (u) -- node[below,sloped,font=\scriptsize]{Activity Data / Date Query} (log);
-\draw[flow] (log) -- (logs);
-\draw[softflow] (logs) -- (log);
-\draw[softflow] (log) -- (screens);
+\begin{tikzpicture}[node distance=2.5cm and 2.2cm]
+\node[dfdentity] (u1) {Athlete / User};
+\node[process,right=of u1,minimum width=3.2cm] (auth) {1.0\\Authenticate and\\Manage Profile};
+\node[store,right=of auth,minimum width=2.8cm] (users) {D1\\User Records};
+
+\node[dfdentity,below=of u1] (u2) {Athlete / User};
+\node[process,right=of u2,minimum width=3.2cm] (plan) {2.0\\Retrieve Plans};
+\node[store,right=of plan,minimum width=2.8cm] (plans) {D2\\Plan Catalogue};
+
+\node[dfdentity,below=of u2] (u3) {Athlete / User};
+\node[process,right=of u3,minimum width=3.2cm] (log) {3.0\\Log and Review\\Daily Activity};
+\node[store,right=of log,minimum width=2.8cm] (logs) {D3\\Daily Activity Records};
+
+\draw[flow] (u1) -- node[above,text width=1.8cm,align=center,flowlabel]{Account data} (auth);
+\draw[softflow] (auth) -- node[below,text width=1.8cm,align=center,flowlabel]{Profile / result} (u1);
+\draw[flow] (auth) -- node[above,text width=1.8cm,align=center,flowlabel]{Write profile} (users);
+\draw[softflow] (users) -- node[below,text width=1.8cm,align=center,flowlabel]{Profile data} (auth);
+\draw[flow] (users.south) -- node[pos=0.55,above=6mm,text width=1.8cm,flowlabel]{Profile criteria} (plan.north);
+
+\draw[flow] (u2) -- node[above,text width=1.8cm,align=center,flowlabel]{Plan request} (plan);
+\draw[softflow] (plan) -- node[below,text width=1.8cm,align=center,flowlabel]{Plans} (u2);
+\draw[flow] (plan) -- node[above,text width=1.8cm,align=center,flowlabel]{Plan lookup} (plans);
+\draw[softflow] (plans) -- node[below,text width=1.8cm,align=center,flowlabel]{Catalogue data} (plan);
+
+\draw[flow] (u3) -- node[above,text width=1.8cm,align=center,flowlabel]{Activity / date} (log);
+\draw[softflow] (log) -- node[below,text width=1.8cm,align=center,flowlabel]{Daily summary} (u3);
+\draw[flow] (log) -- node[above,text width=1.8cm,align=center,flowlabel]{Record query / update} (logs);
+\draw[softflow] (logs) -- node[below,text width=1.8cm,align=center,flowlabel]{History data} (log);
 \end{tikzpicture}}
 \caption{Level-1 System Data Flow Diagram.}
 \label{fig:dfd1}
 \end{figure}
 
+The following Level-2 DFDs decompose each Level-1 process. Each process exchanges data only with an external entity or a data store through a process; no external-entity-to-store or store-to-store flow is shown.
+
+\begin{figure}[htbp]
+\centering
+\resizebox{0.92\linewidth}{!}{
+\begin{tikzpicture}[node distance=2.2cm and 2cm]
+\node[dfdentity] (u) {Athlete / User};
+\node[process,right=of u,minimum width=3.2cm] (verify) {1.1\\Validate Registration\\or Sign-in};
+\node[process,right=of verify,minimum width=3.2cm] (profile) {1.2\\Load or Store Profile\\and Prepare Session};
+\node[dfdentity,right=of profile] (userout) {Athlete / User};
+\node[store,below=of profile,yshift=-0.7cm] (users) {D1\\User Records};
+
+\draw[flow] (u) -- node[above=8mm,text width=1.8cm,align=center,flowlabel]{Account data} (verify);
+\draw[flow] (verify) -- node[above=8mm,text width=1.8cm,align=center,flowlabel]{Valid account} (profile);
+\draw[softflow] (profile) -- node[above=8mm,text width=1.8cm,align=center,flowlabel]{Session / profile} (userout);
+\draw[flow] (profile.south west) -- node[left=3mm,text width=1.8cm,align=right,flowlabel]{Write profile} (users.north west);
+\draw[softflow] (users.north east) -- node[right=3mm,text width=1.8cm,align=left,flowlabel]{Profile data} (profile.south east);
+\end{tikzpicture}}
+\caption{Level-2 DFD: Decomposition of Authentication and Profile Management (Process 1.0).}
+\label{fig:dfd2_auth}
+\end{figure}
+
 \begin{figure}[htbp]
 \centering
 \resizebox{\linewidth}{!}{
-\begin{tikzpicture}[node distance=1.4cm and 1.4cm]
-\node[entity] (u) {Authenticated\\User};
-\node[process,right=of u] (form) {3.1\\Ingest Daily Metrics\\\& Exercise Reps};
-\node[process,right=of form] (auth) {3.2\\Verify Token \&\\Authorize Subject};
-\node[process,below=of auth] (valid) {3.3\\Validate Bounds,\\Types \& Date};
-\node[process,left=of valid] (upsert) {3.4\\Execute Atomic\\Upsert by User/Date};
-\node[store,left=of upsert] (db) {D3\\workoutplans};
-\node[process,below=of upsert] (response) {3.5\\Return Status \&\\Daily Summary};
-\draw[flow] (u) -- node[above,font=\scriptsize]{Input payload} (form);
-\draw[flow] (form) -- node[above,font=\scriptsize]{JSON + Bearer} (auth);
-\draw[flow] (auth) -- node[right,font=\scriptsize]{Authorized} (valid);
-\draw[flow] (valid) -- node[above,font=\scriptsize]{Sanitized} (upsert);
-\draw[flow] (upsert) -- node[above,font=\scriptsize]{GORM SQL} (db);
-\draw[softflow] (db) |- (response);
-\draw[softflow] (response) -| node[below,font=\scriptsize]{JSON Confirmation} (u);
+\begin{tikzpicture}[node distance=1.8cm and 1.8cm]
+\node[dfdentity] (u) {Athlete / User};
+\node[process,right=of u] (request) {2.1\\Receive Plan\\Request};
+\node[process,right=of request] (profile) {2.2\\Retrieve Profile\\Criteria};
+\node[process,right=of profile,xshift=1.5cm] (select) {2.3\\Match and Select\\Plans};
+\node[store,below=of profile] (users) {D1\\User Records};
+\node[store,below=of select,yshift=-0.7cm] (catalog) {D2\\Plan Catalogue};
+\node[dfdentity,right=of select] (userout) {Athlete / User};
+
+\draw[flow] (u) -- node[above=5mm,text width=1.4cm,align=center,flowlabel]{Plan request} (request);
+\draw[flow] (request) -- node[above=5mm,text width=1.5cm,align=center,flowlabel]{Request context} (profile);
+\draw[flow] (profile) -- node[above=5mm,text width=1.4cm,align=center,flowlabel]{Profile criteria} (select);
+\draw[softflow] (select) -- node[above=5mm,text width=1.5cm,align=center,flowlabel]{Plans} (userout);
+\draw[flow] (profile.south west) -- node[pos=0.25,left=3mm,text width=1.8cm,align=right,flowlabel]{Lookup} (users.north west);
+\draw[softflow] (users.north east) -- node[right=3mm,text width=1.8cm,align=left,flowlabel]{Profile data} (profile.south east);
+\draw[flow] (select.south west) -- node[pos=0.25,left=3mm,text width=1.8cm,align=right,flowlabel]{Lookup} (catalog.north west);
+\draw[softflow] (catalog.north east) -- node[pos=0.25,right=3mm,text width=1.8cm,align=left,flowlabel]{Plans} (select.south east);
 \end{tikzpicture}}
-\caption{Level-2 Detailed DFD: Daily Activity Ingestion and Verification Workflow.}
-\label{fig:dfd2}
+\caption{Level-2 DFD: Decomposition of Plan Retrieval (Process 2.0).}
+\label{fig:dfd2_plan}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\resizebox{\linewidth}{!}{
+\begin{tikzpicture}[node distance=1.8cm and 2.3cm]
+\node[dfdentity] (u) {Athlete / User};
+\node[process,right=of u] (auth) {3.1\\Authenticate Request\\and Resolve User};
+\node[process,right=of auth] (valid) {3.2\\Validate Metrics\\and Date};
+\node[process,right=of valid] (upsert) {3.3\\Create or Update\\Daily Record};
+\node[store,right=of upsert] (db) {D3\\Daily Activity Records};
+\node[process,below=of valid] (response) {3.4\\Prepare Status\\and Daily Summary};
+
+\draw[flow] (u) -- node[above=5mm,text width=1.6cm,align=center,flowlabel]{Token / metrics} (auth);
+\draw[flow] (auth) -- node[above=5mm,text width=1.6cm,align=center,flowlabel]{Authorized data} (valid);
+\draw[flow] (valid) -- node[above=5mm,text width=1.6cm,align=center,flowlabel]{Valid activity} (upsert);
+\draw[flow] (upsert) -- node[above=5mm,text width=1.5cm,align=center,flowlabel]{Record update} (db);
+\draw[softflow] (db) -- node[below=5mm,text width=1.5cm,align=center,flowlabel]{Existing data} (upsert);
+\draw[softflow] (upsert) -- node[pos=0.5,right,text width=1.5cm,align=center,flowlabel]{Saved activity} (response);
+\draw[softflow] (response.west) -| node[pos=0.25,below,text width=2cm,align=center,flowlabel]{Summary} (u.south);
+\end{tikzpicture}}
+\caption{Level-2 DFD: Decomposition of Daily Activity Logging and History Review (Process 3.0).}
+\label{fig:dfd2_activity}
 \end{figure}
 
 \clearpage
@@ -410,105 +467,110 @@ The proposed browser-to-API interface uses JSON over HTTP during local developme
 \chapter{Analysis and Data Models}
 
 \section{Entity-Relationship Model}
-The conceptual and logical data model of Formwell is depicted in Figure~\ref{fig:er}. The model links user profiles to daily workout tracking records via a 1-to-many relationship, while user biometrics (Body Types and Age Groups) are mapped to categorized workout schedules and diet plans through associative mapping tables.
+The logical data model of Formwell is depicted in Figure~\ref{fig:er}. Solid connectors show database foreign-key relationships. Each workout mapping references exactly one body type, age group, cardio tier, and strength tier; each lookup row may be referenced by zero or more mappings. Daily logs belong to one user, and the unique constraint on (username, date) permits at most one log per user per date. Exercise targets reference an age group through a unique foreign key, so an age group has at most one target row. Schedule and diet tables are seeded catalogs selected by application code; they have no declared foreign keys to the tier tables and are therefore shown separately.
 
 \begin{figure}[htbp]
 \centering
-\resizebox{\linewidth}{!}{
-\begin{tikzpicture}[node distance=1.35cm and 2cm]
-\node[entity] (user) {user\_database\\PK: username};
-\node[entity,right=of user] (logs) {workoutplans\\PK: id\\FK: username, UQ: username+date};
-\node[entity,below=of user] (body) {body\_types\\PK: id, UQ: name};
-\node[entity,right=of body] (map) {usertype\_workout\_map\\PK: id, UQ: body+age};
-\node[entity,below=of body] (age) {age\_groups\\PK: id, UQ: name};
-\node[entity,right=of age] (exercise) {exercise\_data\\PK: id, FK: age};
-\node[entity,above=of map] (cardio) {cardio\_plan\_types\\PK: id};
-\node[entity,right=of cardio] (strength) {strength\_plan\_types\\PK: id};
-\node[store,right=of map,xshift=1.6cm] (catalog) {Schedule and Diet\\Catalog Tables};
-\draw[relation] (user) -- node[above,font=\scriptsize]{1 : 0..N} (logs);
-\draw[relation] (body) -- node[above,font=\scriptsize]{1 : 0..N} (map);
-\draw[relation] (age) -- node[below,font=\scriptsize]{1 : 0..N} (map);
-\draw[relation] (age) -- node[below,font=\scriptsize]{1 : 0..1} (exercise);
-\draw[relation] (cardio) -- node[above,font=\scriptsize]{1 : 0..N} (map);
-\draw[relation] (map) -- node[above,font=\scriptsize]{N : 1} (strength);
-\draw[softflow,dashed] (map) -- node[above,font=\scriptsize,align=center]{Rule Selector} (catalog);
-\end{tikzpicture}}
+\includegraphics[width=\linewidth]{ER.png}
 \caption{Proposed Entity-Relationship (ER) Diagram.}
 \label{fig:er}
 \end{figure}
 
 \section{User Workflow and Activity Diagram}
-Figure~\ref{fig:activity} illustrates the end-to-end user navigation flow from authentication through dashboard inspection, plan review, daily logging, and historical reporting.
+Figure~\ref{fig:activity} uses UML activity notation. It shows session validation, the authenticated dashboard, guarded navigation choices, and the activity paths available to the user.
 
 \begin{figure}[htbp]
 \centering
-\resizebox{0.8\linewidth}{!}{
-\begin{tikzpicture}[node distance=0.85cm]
-\node[state] (start) {Start / Open App};
-\node[state,below=of start] (auth) {Sign In / Register Account};
-\node[state,below=of auth] (token) {Token Valid?};
-\node[state,below=of token] (dashboard) {Load Profile \&\\Dashboard Summary};
-\node[state,below left=1cm and 1.1cm of dashboard] (plans) {Inspect Workout\\\& Diet Plans};
-\node[state,below=1cm of dashboard] (log) {Enter Daily Water,\\Steps \& Reps};
-\node[state,below right=1cm and 1.1cm of dashboard] (history) {Select Historical\\Calendar Date};
-\node[state,below=1.2cm of log] (persist) {Validate \& Upsert\\Daily Record};
-\node[state,below=1.2cm of history] (read) {Fetch Saved Log\\\& Render Progress};
-\draw[relation] (start) -- (auth);
-\draw[relation] (auth) -- (token);
-\draw[relation] (token) -- node[right,font=\scriptsize]{Yes} (dashboard);
-\draw[relation] (dashboard) -- (plans);
-\draw[relation] (dashboard) -- (log);
-\draw[relation] (dashboard) -- (history);
-\draw[relation] (log) -- (persist);
-\draw[relation] (history) -- (read);
-\draw[relation] (persist) -| (dashboard);
-\draw[relation] (read) -| (dashboard);
-\draw[relation,dashed] (token.west) -| node[left,font=\scriptsize]{No / Expired} (auth.west);
+\resizebox{0.94\linewidth}{!}{
+\begin{tikzpicture}[every node/.append style={font=\scriptsize}]
+\node[circle,fill=ink,inner sep=2.2pt] (start) at (0,8) {};
+\node[activityaction,minimum width=3.6cm] (session) at (0,6.5) {Check Saved Session Token};
+\node[activitydecision,minimum width=1.7cm,minimum height=1.1cm] (valid) at (0,4.7) {Token valid?};
+\node[activityaction] (auth) at (-4.5,2.5) {Sign In or Register};
+\node[activitydecision,minimum width=1.9cm,minimum height=1.2cm] (signedin) at (-4.5,0.5) {Outcome?};
+\node[activityaction,minimum width=3.4cm] (created) at (-4.5,-1.7) {Account Created; Sign In};
+\node[activityaction,minimum width=3.6cm] (dashboard) at (2,2.5) {Load Profile and Dashboard};
+\node[activityaction] (menu) at (2,0.5) {Choose App View};
+\node[activitydecision,minimum width=2.0cm,minimum height=1.3cm] (choice) at (2,-1.4) {View?};
+
+\node[activityaction,minimum width=3.1cm] (plans) at (-6,-3.8) {Load Workout Plans};
+\node[activityaction,minimum width=3.1cm] (stats) at (-2,-3.8) {Load Today's Progress};
+\node[activityaction,minimum width=3.5cm] (save) at (-2,-5.8) {Enter Metrics and Save Activity};
+\node[activityaction,minimum width=3.1cm] (refresh) at (-2,-7.8) {Refresh Today's Progress};
+\node[activityaction,minimum width=3.1cm] (reports) at (3,-3.8) {Select Report Date};
+\node[activityaction,minimum width=3.5cm] (report) at (3,-5.8) {Fetch and Render Report};
+\node[activityaction,minimum width=3.1cm] (profile) at (8,-3.8) {View Profile Details};
+\node[activityaction,minimum width=3.1cm] (close) at (10.5,-1.4) {Close App};
+
+\node[circle,draw=ink,fill=white,inner sep=2.2pt] (endplans) at (-6,-5.2) {};
+\node[circle,fill=ink,inner sep=1.2pt] at (endplans) {};
+\node[circle,draw=ink,fill=white,inner sep=2.2pt] (endstats) at (-2,-9.2) {};
+\node[circle,fill=ink,inner sep=1.2pt] at (endstats) {};
+\node[circle,draw=ink,fill=white,inner sep=2.2pt] (endreport) at (3,-7.2) {};
+\node[circle,fill=ink,inner sep=1.2pt] at (endreport) {};
+\node[circle,draw=ink,fill=white,inner sep=2.2pt] (endprofile) at (8,-5.2) {};
+\node[circle,fill=ink,inner sep=1.2pt] at (endprofile) {};
+\node[circle,draw=ink,fill=white,inner sep=2.2pt] (endclose) at (10.5,-2.5) {};
+\node[circle,fill=ink,inner sep=1.2pt] at (endclose) {};
+
+\draw[relation] (start) -- (session);
+\draw[relation] (session) -- (valid);
+\draw[relation] (valid.west) -| node[pos=.25,left,fill=white,inner sep=2pt]{[no]} (auth.north);
+\draw[relation] (valid.east) -| node[pos=.25,right,fill=white,inner sep=2pt]{[yes]} (dashboard.north);
+\draw[relation] (auth) -- (signedin);
+\draw[relation] (signedin.west) -- node[above,fill=white,inner sep=2pt]{[invalid]} ++(-1.5,0) |- (auth.west);
+\draw[relation] (signedin.east) -- (0,0.5) -- (0,-0.3) -- node[above,fill=white,inner sep=2pt]{[sign-in succeeds]} (4,-0.3) -- (4,2.5) -- (dashboard.east);
+\draw[relation] (signedin.south) -- node[left,fill=white,inner sep=2pt]{[registration succeeds]} (created.north);
+\draw[relation] (created.west) -- (-7,-1.7) |- (auth.west);
+\draw[relation] (dashboard) -- (menu);
+\draw[relation] (menu) -- (choice);
+\draw[relation] (choice.west) -- node[above,fill=white,inner sep=2pt]{[workouts]} (plans.east);
+\draw[relation] (choice.south west) -- node[below,sloped,fill=white,inner sep=2pt]{[stats]} (stats.north);
+\draw[relation] (choice.south east) -- node[below,sloped,fill=white,inner sep=2pt]{[reports]} (reports.north);
+\draw[relation] (choice.east) -- node[above,fill=white,inner sep=2pt]{[profile]} (profile.west);
+\draw[relation] (choice.east) -- node[above,fill=white,inner sep=2pt]{[exit]} (close.west);
+\draw[relation] (plans) -- (endplans);
+\draw[relation] (stats) -- (save);
+\draw[relation] (save) -- (refresh);
+\draw[relation] (refresh) -- (endstats);
+\draw[relation] (reports) -- (report);
+\draw[relation] (report) -- (endreport);
+\draw[relation] (profile) -- (endprofile);
+\draw[relation] (close) -- (endclose);
 \end{tikzpicture}}
-\caption{Proposed System Activity Diagram.}
+\caption{UML Activity Diagram of the User Workflow.}
 \label{fig:activity}
 \end{figure}
 
-\section{Class and Component Architecture}
-Figure~\ref{fig:class} models the modular software component architecture, separating client-side presentation, HTTP routing, business services, GORM ORM data mapping, and PostgreSQL persistence.
+% \section{Class and Component Architecture}
+% Figure~\ref{fig:class} models the modular software component architecture, separating client-side presentation, HTTP routing, business services, GORM ORM data mapping, and PostgreSQL persistence.
+
+% \begin{figure}[htbp]
+% \centering
+% \resizebox{\linewidth}{!}{
+% \begin{tikzpicture}[node distance=0.65cm and 0.55cm]
+% \node[entity] (frontend) {Client Browser UI\\HTML5 / CSS3 / JavaScript};
+% \node[process,right=of frontend] (handlers) {Go HTTP Handlers\\\& JWT Middleware};
+% \node[process,right=of handlers] (interface) {Database Service\\Repository Interface};
+% \node[process,right=of interface] (mydb) {GORM Database\\Implementation};
+% \node[store,right=of mydb] (pg) {PostgreSQL 16\\Database};
+% \draw[relation] (frontend) -- node[above,font=\scriptsize]{JSON / HTTP} (handlers);
+% \draw[relation] (handlers) -- node[above,font=\scriptsize]{Method Call} (interface);
+% \draw[relation] (interface) -- node[above,font=\scriptsize]{GORM API} (mydb);
+% \draw[relation] (mydb) -- node[above,font=\scriptsize]{SQL Queries} (pg);
+% \end{tikzpicture}}
+% \caption{Proposed Class and Component Architecture.}
+% \label{fig:class}
+% \end{figure}
+
+\clearpage
+\section{UML State Machine Model}
+Figure~\ref{fig:state} uses UML state-machine notation to show the lifecycle of a daily activity submission. Guarded transitions distinguish malformed input, a missing or existing daily record, and successful or failed writes.
 
 \begin{figure}[htbp]
 \centering
-\resizebox{\linewidth}{!}{
-\begin{tikzpicture}[node distance=0.65cm and 0.55cm]
-\node[entity] (frontend) {Client Browser UI\\HTML5 / CSS3 / JavaScript};
-\node[process,right=of frontend] (handlers) {Go HTTP Handlers\\\& JWT Middleware};
-\node[process,right=of handlers] (interface) {Database Service\\Repository Interface};
-\node[process,right=of interface] (mydb) {GORM Database\\Implementation};
-\node[store,right=of mydb] (pg) {PostgreSQL 16\\Database};
-\draw[relation] (frontend) -- node[above,font=\scriptsize]{JSON / HTTP} (handlers);
-\draw[relation] (handlers) -- node[above,font=\scriptsize]{Method Call} (interface);
-\draw[relation] (interface) -- node[above,font=\scriptsize]{GORM API} (mydb);
-\draw[relation] (mydb) -- node[above,font=\scriptsize]{SQL Queries} (pg);
-\end{tikzpicture}}
-\caption{Proposed Class and Component Architecture.}
-\label{fig:class}
-\end{figure}
-
-\section{State Transition Model}
-The lifecycle of a user's daily activity record is formalized in the state diagram shown in Figure~\ref{fig:state}. A record transitions from non-existent to newly persisted upon the initial submission for a date, and subsequent submissions execute an idempotent update state.
-
-\begin{figure}[htbp]
-\centering
-\resizebox{0.85\linewidth}{!}{
-\begin{tikzpicture}[node distance=1.5cm and 1.3cm]
-\node[state] (none) {No Record\\for Date};
-\node[state,right=of none] (new) {Daily Input\\Payload Received};
-\node[state,right=of new] (saved) {Record Persisted\\(First Insert)};
-\node[state,below=of saved] (updated) {Record Updated\\(Atomic Upsert)};
-\node[state,below=of new] (invalid) {Validation Error /\\Request Rejected};
-\draw[relation] (none) -- node[above,font=\scriptsize]{First valid submit} (new);
-\draw[relation] (new) -- node[above,font=\scriptsize]{Validation passes} (saved);
-\draw[relation] (saved) -- node[right,font=\scriptsize]{Subsequent submit} (updated);
-\draw[relation] (new) -- node[left,font=\scriptsize]{Invalid data/bounds} (invalid);
-\draw[relation] (updated) -- (new);
-\end{tikzpicture}}
-\caption{State Transition Diagram for Daily Activity Record.}
+\includegraphics[width=0.9\linewidth]{statemachine.png}
+\caption{UML State Machine for Daily Activity Submission.}
 \label{fig:state}
 \end{figure}
 
