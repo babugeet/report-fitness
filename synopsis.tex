@@ -1,5 +1,5 @@
 % !TeX root = synopsis.tex
-\documentclass[10pt,a4paper]{report}
+\documentclass[11pt,a4paper]{report}
 
 \usepackage[margin=0.75in]{geometry}
 \usepackage{setspace}
@@ -7,6 +7,7 @@
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{longtable}
+\usepackage{float}
 \usepackage{array}
 \usepackage{amsmath}
 \usepackage{xcolor}
@@ -17,7 +18,9 @@
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 \usepackage[hidelinks]{hyperref}
-\usetikzlibrary{arrows.meta,positioning,shapes.geometric,fit,calc}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,fit,calc,backgrounds}
+\pgfdeclarelayer{dfdforeground}
+\pgfsetlayers{background,main,dfdforeground}
 
 % Compact chapter heading styling to optimize academic proposal length (15-20 pages)
 \makeatletter
@@ -42,7 +45,7 @@
   }}
 \makeatother
 
-\setstretch{1.0}
+\setstretch{1.15}
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0.25em}
 \setlist{nosep,leftmargin=*}
@@ -56,26 +59,29 @@
 \renewcommand{\textfraction}{0.15}
 \renewcommand{\floatpagefraction}{0.75}
 
-\definecolor{ink}{HTML}{24343A}
+\definecolor{ink}{HTML}{000000}
 \definecolor{green}{HTML}{2E6F5B}
 \definecolor{pale}{HTML}{EAF1ED}
 \definecolor{gold}{HTML}{D79A32}
 \definecolor{red}{HTML}{9A4339}
 
 \tikzset{
-  entity/.style={draw=ink,fill=pale,rounded corners=2pt,align=center,minimum width=2.6cm,minimum height=0.8cm,font=\small},
-  dfdentity/.style={draw=ink,fill=pale,rectangle,align=center,minimum width=2.6cm,minimum height=0.8cm,font=\small},
-  process/.style={draw=green,fill=green!8,rounded corners=4pt,align=center,minimum width=2.8cm,minimum height=0.9cm,font=\small},
-  store/.style={draw=none,fill=white,align=center,minimum width=2.6cm,minimum height=0.8cm,font=\small,append after command={\pgfextra{\draw[ink] (\tikzlastnode.north west) -- (\tikzlastnode.north east);\draw[ink] (\tikzlastnode.south west) -- (\tikzlastnode.south east);}}},
-  activityaction/.style={draw=green,fill=green!8,rounded corners=3pt,align=center,minimum width=3.2cm,minimum height=0.8cm,font=\scriptsize},
-  activitydecision/.style={draw=ink,fill=white,diamond,aspect=2,align=center,inner sep=1pt,font=\scriptsize},
-  umlstate/.style={draw=green,fill=green!8,rounded corners=8pt,align=center,minimum width=2.8cm,minimum height=0.9cm,font=\scriptsize},
-  relation/.style={-{Latex[length=2.2mm]},draw=ink,thick},
-  flow/.style={-{Latex[length=2mm]},draw=green!80!black,thick},
-  softflow/.style={-{Latex[length=2mm]},draw=ink!70,thick},
-  flowlabel/.style={font=\footnotesize,align=center,text=ink,fill=white,inner sep=2pt},
-  uml/.style={draw=ink,fill=white,rounded corners=2pt,align=left,font=\scriptsize,inner sep=5pt},
-  state/.style={draw=green,fill=green!8,rounded corners=6pt,align=center,minimum width=2.5cm,minimum height=0.8cm,font=\small}
+  entity/.style={draw=black,fill=white,rounded corners=2pt,align=center,minimum width=2.6cm,minimum height=0.8cm,font=\normalsize,text=black},
+  dfdentity/.style={draw=black,fill=white,rectangle,align=center,minimum width=2.6cm,minimum height=0.8cm,font=\normalsize,text=black},
+  process/.style={draw=black,fill=white,rounded corners=4pt,align=center,minimum width=2.8cm,minimum height=0.9cm,font=\normalsize,text=black},
+  store/.style={draw=none,fill=white,align=center,minimum width=2.6cm,minimum height=0.8cm,font=\normalsize,text=black,append after command={\pgfextra{\draw[black,line width=0.8pt] (\tikzlastnode.north west) -- (\tikzlastnode.north east);\draw[black,line width=0.8pt] (\tikzlastnode.south west) -- (\tikzlastnode.south east);}}},
+  activityaction/.style={draw=black,fill=white,rounded corners=3pt,align=center,minimum width=3.2cm,minimum height=0.8cm,font=\small,text=black},
+  activitydecision/.style={draw=black,fill=white,diamond,aspect=2,align=center,inner sep=1pt,font=\small,text=black},
+  umlstate/.style={draw=black,fill=white,rounded corners=8pt,align=center,minimum width=2.8cm,minimum height=0.9cm,font=\small,text=black},
+  relation/.style={-{Latex[length=2.2mm]},draw=black,thick},
+  flow/.style={-{Latex[length=2mm]},draw=black,thick},
+  softflow/.style={-{Latex[length=2mm]},draw=black,thick},
+  flowlabel/.style={font=\footnotesize,align=center,text=black,fill=white,inner sep=2pt},
+  dfdleveltwo/.style={font=\large},
+  dfdleveltwoentity/.style={dfdentity,font=\large,minimum width=1.8cm},
+  dfdleveltwolabel/.style={flowlabel,font=\small},
+  uml/.style={draw=black,fill=white,rounded corners=2pt,align=left,font=\footnotesize,text=black,inner sep=5pt},
+  state/.style={draw=black,fill=white,rounded corners=6pt,align=center,minimum width=2.5cm,minimum height=0.8cm,font=\normalsize,text=black}
 }
 
 \begin{document}
@@ -141,7 +147,7 @@
 \chapter{Introduction and Objectives}
 
 \section{Introduction}
-People who exercise independently may use separate tools to keep profile details, routines, hydration notes, and activity records. A focused web application can make these records easier to review together. This proposal addresses that information-management need for students and other users who want a simple personal activity log.
+People who exercise independently may use separate tools to keep profile details, routines, hydration notes, and activity records. A focused web application can make these records easier to review together. This proposal addresses that information-management need for athletes  and other users who want a simple personal activity log.
 
 The \textbf{Formwell} project proposes a browser application that brings profile baselines, curated routines, meal-plan content, and daily activity logs into one interface. The planned architecture separates the browser frontend, Go HTTP API, and PostgreSQL persistence layer. Performance and reliability will be evaluated against defined workloads during development.
 
@@ -314,7 +320,7 @@ The proposed system will use a three-tier client-server architecture comprising 
 \centering
 \resizebox{0.92\linewidth}{!}{
 \begin{tikzpicture}[node distance=3.2cm]
-\node[dfdentity] (user) {Athlete / User};
+\node[dfdentity] (user) {User};
 \node[process,right=of user,minimum width=4.6cm] (system) {0\quad Formwell Fitness Tracking System};
 \draw[flow] (user) -- node[above,text width=2.4cm,align=center,flowlabel]{Requests} (system);
 \draw[softflow] (system) -- node[below,text width=2.4cm,align=center,flowlabel]{Profiles, plans, summaries} (user);
@@ -329,15 +335,15 @@ The Level-1 DFD (Figure~\ref{fig:dfd1}) decomposes process 0 into authentication
 \centering
 \resizebox{\linewidth}{!}{
 \begin{tikzpicture}[node distance=2.5cm and 2.2cm]
-\node[dfdentity] (u1) {Athlete / User};
+\node[dfdentity] (u1) {User};
 \node[process,right=of u1,minimum width=3.2cm] (auth) {1.0\\Authenticate and\\Manage Profile};
 \node[store,right=of auth,minimum width=2.8cm] (users) {D1\\User Records};
 
-\node[dfdentity,below=of u1] (u2) {Athlete / User};
+\node[dfdentity,below=of u1] (u2) {User};
 \node[process,right=of u2,minimum width=3.2cm] (plan) {2.0\\Retrieve Plans};
 \node[store,right=of plan,minimum width=2.8cm] (plans) {D2\\Plan Catalogue};
 
-\node[dfdentity,below=of u2] (u3) {Athlete / User};
+\node[dfdentity,below=of u2] (u3) {User};
 \node[process,right=of u3,minimum width=3.2cm] (log) {3.0\\Log and Review\\Daily Activity};
 \node[store,right=of log,minimum width=2.8cm] (logs) {D3\\Daily Activity Records};
 
@@ -365,19 +371,19 @@ The following Level-2 DFDs decompose each Level-1 process. Each process exchange
 
 \begin{figure}[htbp]
 \centering
-\resizebox{0.92\linewidth}{!}{
-\begin{tikzpicture}[node distance=2.2cm and 2cm]
-\node[dfdentity] (u) {Athlete / User};
-\node[process,right=of u,minimum width=3.2cm] (verify) {1.1\\Validate Registration\\or Sign-in};
-\node[process,right=of verify,minimum width=3.2cm] (profile) {1.2\\Load or Store Profile\\and Prepare Session};
-\node[dfdentity,right=of profile] (userout) {Athlete / User};
-\node[store,below=of profile,yshift=-0.7cm] (users) {D1\\User Records};
+\resizebox{0.98\linewidth}{!}{
+\begin{tikzpicture}[node distance=1.2cm and 1cm]
+\node[dfdleveltwoentity] (u) {User};
+\node[process,dfdleveltwo,right=of u,minimum width=3.2cm] (verify) {1.1\\Validate Registration\\or Sign-in};
+\node[process,dfdleveltwo,right=of verify,minimum width=3.2cm] (profile) {1.2\\Load or Store Profile\\and Prepare Session};
+\node[dfdleveltwoentity,right=of profile] (userout) {User};
+\node[store,dfdleveltwo,below=of profile,yshift=-0.7cm] (users) {D1\\User Records};
 
-\draw[flow] (u) -- node[above=8mm,text width=1.8cm,align=center,flowlabel]{Account data} (verify);
-\draw[flow] (verify) -- node[above=8mm,text width=1.8cm,align=center,flowlabel]{Valid account} (profile);
-\draw[softflow] (profile) -- node[above=8mm,text width=1.8cm,align=center,flowlabel]{Session / profile} (userout);
-\draw[flow] (profile.south west) -- node[left=3mm,text width=1.8cm,align=right,flowlabel]{Write profile} (users.north west);
-\draw[softflow] (users.north east) -- node[right=3mm,text width=1.8cm,align=left,flowlabel]{Profile data} (profile.south east);
+\draw[flow] (u) -- node[above=8mm,text width=1.8cm,align=center,dfdleveltwolabel]{Account data} (verify);
+\draw[flow] (verify) -- node[above=8mm,text width=1.8cm,align=center,dfdleveltwolabel]{Valid account} (profile);
+\draw[softflow] (profile) -- node[above=8mm,text width=1.8cm,align=center,dfdleveltwolabel]{Session / profile} (userout);
+\draw[flow] (profile.south west) -- node[left=3mm,text width=1.8cm,align=right,dfdleveltwolabel]{Write profile} (users.north west);
+\draw[softflow] (users.north east) -- node[right=3mm,text width=1.8cm,align=left,dfdleveltwolabel]{Profile data} (profile.south east);
 \end{tikzpicture}}
 \caption{Level-2 DFD: Decomposition of Authentication and Profile Management (Process 1.0).}
 \label{fig:dfd2_auth}
@@ -386,23 +392,23 @@ The following Level-2 DFDs decompose each Level-1 process. Each process exchange
 \begin{figure}[htbp]
 \centering
 \resizebox{\linewidth}{!}{
-\begin{tikzpicture}[node distance=1.8cm and 1.8cm]
-\node[dfdentity] (u) {Athlete / User};
-\node[process,right=of u] (request) {2.1\\Receive Plan\\Request};
-\node[process,right=of request] (profile) {2.2\\Retrieve Profile\\Criteria};
-\node[process,right=of profile,xshift=1.5cm] (select) {2.3\\Match and Select\\Plans};
-\node[store,below=of profile] (users) {D1\\User Records};
-\node[store,below=of select,yshift=-0.7cm] (catalog) {D2\\Plan Catalogue};
-\node[dfdentity,right=of select] (userout) {Athlete / User};
+\begin{tikzpicture}[node distance=1.1cm and 1.6cm]
+\node[dfdleveltwoentity] (u) {User};
+\node[process,dfdleveltwo,right=of u,minimum width=2.5cm] (request) {2.1\\Receive Plan\\Request};
+\node[process,dfdleveltwo,right=of request,minimum width=2.5cm] (profile) {2.2\\Retrieve Profile\\Criteria};
+\node[process,dfdleveltwo,right=of profile,minimum width=2.5cm] (select) {2.3\\Match and Select\\Plans};
+\node[store,dfdleveltwo,below=2cm of profile] (users) {D1\\User Records};
+\node[store,dfdleveltwo,below=of select,yshift=-0.7cm] (catalog) {D2\\Plan Catalogue};
+\node[dfdleveltwoentity,right=of select] (userout) {User};
 
-\draw[flow] (u) -- node[above=5mm,text width=1.4cm,align=center,flowlabel]{Plan request} (request);
-\draw[flow] (request) -- node[above=5mm,text width=1.5cm,align=center,flowlabel]{Request context} (profile);
-\draw[flow] (profile) -- node[above=5mm,text width=1.4cm,align=center,flowlabel]{Profile criteria} (select);
-\draw[softflow] (select) -- node[above=5mm,text width=1.5cm,align=center,flowlabel]{Plans} (userout);
-\draw[flow] (profile.south west) -- node[pos=0.25,left=3mm,text width=1.8cm,align=right,flowlabel]{Lookup} (users.north west);
-\draw[softflow] (users.north east) -- node[right=3mm,text width=1.8cm,align=left,flowlabel]{Profile data} (profile.south east);
-\draw[flow] (select.south west) -- node[pos=0.25,left=3mm,text width=1.8cm,align=right,flowlabel]{Lookup} (catalog.north west);
-\draw[softflow] (catalog.north east) -- node[pos=0.25,right=3mm,text width=1.8cm,align=left,flowlabel]{Plans} (select.south east);
+\draw[flow] (u) -- node[above=8mm,text width=1.4cm,align=center,dfdleveltwolabel]{Plan request} (request);
+\draw[flow] (request) -- node[above=8mm,text width=1.4cm,align=center,dfdleveltwolabel]{Request context} (profile);
+\draw[flow] (profile) -- node[above=8mm,text width=1.4cm,align=center,dfdleveltwolabel]{Profile criteria} (select);
+\draw[softflow] (select) -- node[above=8mm,text width=1.4cm,align=center,dfdleveltwolabel]{Plans} (userout);
+\draw[flow] (profile.south west) -- node[pos=0.65,left=8mm,text width=1.1cm,align=right,dfdleveltwolabel]{Lookup} (users.north west);
+\draw[softflow] (users.north east) -- node[pos=0.35,left=4mm,text width=1.3cm,align=right,dfdleveltwolabel]{Profile data} (profile.south east);
+\draw[flow] (select.south west) -- node[pos=0.25,left=3mm,text width=1.8cm,align=right,dfdleveltwolabel]{Lookup} (catalog.north west);
+\draw[softflow] (catalog.north east) -- node[pos=0.25,right=3mm,text width=1.8cm,align=left,dfdleveltwolabel]{Plans} (select.south east);
 \end{tikzpicture}}
 \caption{Level-2 DFD: Decomposition of Plan Retrieval (Process 2.0).}
 \label{fig:dfd2_plan}
@@ -411,21 +417,23 @@ The following Level-2 DFDs decompose each Level-1 process. Each process exchange
 \begin{figure}[htbp]
 \centering
 \resizebox{\linewidth}{!}{
-\begin{tikzpicture}[node distance=1.8cm and 2.3cm]
-\node[dfdentity] (u) {Athlete / User};
-\node[process,right=of u] (auth) {3.1\\Authenticate Request\\and Resolve User};
-\node[process,right=of auth] (valid) {3.2\\Validate Metrics\\and Date};
-\node[process,right=of valid] (upsert) {3.3\\Create or Update\\Daily Record};
-\node[store,right=of upsert] (db) {D3\\Daily Activity Records};
-\node[process,below=of valid] (response) {3.4\\Prepare Status\\and Daily Summary};
+\begin{tikzpicture}[node distance=1.2cm and 1cm]
+\begin{pgfonlayer}{dfdforeground}
+\node[dfdleveltwoentity,line width=0.8pt] (u) {User};
+\node[process,dfdleveltwo,line width=0.8pt,right=of u] (auth) {3.1\\Authenticate Request\\and Resolve User};
+\node[process,dfdleveltwo,line width=0.8pt,right=of auth] (valid) {3.2\\Validate Metrics\\and Date};
+\node[process,dfdleveltwo,line width=0.8pt,right=of valid] (upsert) {3.3\\Create or Update\\Daily Record};
+\node[store,dfdleveltwo,right=of upsert] (db) {D3\\Daily Activity Records};
+\node[process,dfdleveltwo,line width=0.8pt,below=of valid] (response) {3.4\\Prepare Status\\and Daily Summary};
+\end{pgfonlayer}
 
-\draw[flow] (u) -- node[above=5mm,text width=1.6cm,align=center,flowlabel]{Token / metrics} (auth);
-\draw[flow] (auth) -- node[above=5mm,text width=1.6cm,align=center,flowlabel]{Authorized data} (valid);
-\draw[flow] (valid) -- node[above=5mm,text width=1.6cm,align=center,flowlabel]{Valid activity} (upsert);
-\draw[flow] (upsert) -- node[above=5mm,text width=1.5cm,align=center,flowlabel]{Record update} (db);
-\draw[softflow] (db) -- node[below=5mm,text width=1.5cm,align=center,flowlabel]{Existing data} (upsert);
-\draw[softflow] (upsert) -- node[pos=0.5,right,text width=1.5cm,align=center,flowlabel]{Saved activity} (response);
-\draw[softflow] (response.west) -| node[pos=0.25,below,text width=2cm,align=center,flowlabel]{Summary} (u.south);
+\draw[flow] (u) -- node[above=5mm,text width=1.6cm,align=center,dfdleveltwolabel]{Token / metrics} (auth);
+\draw[flow] (auth) -- node[above=5mm,text width=1.6cm,align=center,dfdleveltwolabel]{Authorized data} (valid);
+\draw[flow] (valid) -- node[above=5mm,text width=1.6cm,align=center,dfdleveltwolabel]{Valid activity} (upsert);
+\draw[flow] ([yshift=2pt]upsert.east) -- node[above=5mm,text width=1.5cm,align=center,dfdleveltwolabel]{Record update} ([yshift=2pt]db.west);
+\draw[softflow] ([yshift=-2pt]db.west) -- node[below=5mm,text width=1.5cm,align=center,dfdleveltwolabel]{Existing data} ([yshift=-2pt]upsert.east);
+\draw[softflow] (upsert.south west) -- node[pos=0.5,right,text width=1.5cm,align=center,dfdleveltwolabel]{Saved activity} (response.north east);
+\draw[softflow] (response.west) -| node[pos=0.25,below,text width=2cm,align=center,dfdleveltwolabel]{Summary} (u.south);
 \end{tikzpicture}}
 \caption{Level-2 DFD: Decomposition of Daily Activity Logging and History Review (Process 3.0).}
 \label{fig:dfd2_activity}
@@ -482,7 +490,7 @@ Figure~\ref{fig:activity} uses UML activity notation. It shows session validatio
 \begin{figure}[htbp]
 \centering
 \resizebox{0.94\linewidth}{!}{
-\begin{tikzpicture}[every node/.append style={font=\scriptsize}]
+\begin{tikzpicture}[every node/.append style={font=\small}]
 \node[circle,fill=ink,inner sep=2.2pt] (start) at (0,8) {};
 \node[activityaction,minimum width=3.6cm] (session) at (0,6.5) {Check Saved Session Token};
 \node[activitydecision,minimum width=1.7cm,minimum height=1.1cm] (valid) at (0,4.7) {Token valid?};
@@ -519,16 +527,16 @@ Figure~\ref{fig:activity} uses UML activity notation. It shows session validatio
 \draw[relation] (valid.east) -| node[pos=.25,right,fill=white,inner sep=2pt]{[yes]} (dashboard.north);
 \draw[relation] (auth) -- (signedin);
 \draw[relation] (signedin.west) -- node[above,fill=white,inner sep=2pt]{[invalid]} ++(-1.5,0) |- (auth.west);
-\draw[relation] (signedin.east) -- (0,0.5) -- (0,-0.3) -- node[above,fill=white,inner sep=2pt]{[sign-in succeeds]} (4,-0.3) -- (4,2.5) -- (dashboard.east);
+\draw[relation] (signedin.east) -- (-0.4,0.5) -- node[midway,left,fill=white,inner sep=2pt]{[sign-in succeeds]} (-0.4,2.5) -- (dashboard.west);
 \draw[relation] (signedin.south) -- node[left,fill=white,inner sep=2pt]{[registration succeeds]} (created.north);
 \draw[relation] (created.west) -- (-7,-1.7) |- (auth.west);
 \draw[relation] (dashboard) -- (menu);
 \draw[relation] (menu) -- (choice);
 \draw[relation] (choice.west) -- node[above,fill=white,inner sep=2pt]{[workouts]} (plans.east);
-\draw[relation] (choice.south west) -- node[below,sloped,fill=white,inner sep=2pt]{[stats]} (stats.north);
-\draw[relation] (choice.south east) -- node[below,sloped,fill=white,inner sep=2pt]{[reports]} (reports.north);
+\draw[relation] (choice.south west) -- node[pos=.5,left,fill=white,inner sep=2pt]{[stats]} (stats.north);
+\draw[relation] (choice.south east) -- node[pos=.5,right,fill=white,inner sep=2pt]{[reports]} (reports.north);
 \draw[relation] (choice.east) -- node[above,fill=white,inner sep=2pt]{[profile]} (profile.west);
-\draw[relation] (choice.east) -- node[above,fill=white,inner sep=2pt]{[exit]} (close.west);
+\draw[relation] (choice.north east) -- node[above,fill=white,inner sep=2pt]{[exit]} (close.west);
 \draw[relation] (plans) -- (endplans);
 \draw[relation] (stats) -- (save);
 \draw[relation] (save) -- (refresh);
@@ -643,7 +651,7 @@ The proposed database will store the schedule catalogues in category-specific re
 \section{Module Decomposition and Planned Effort}
 The proposed system is decomposed into nine functional modules (M1--M9). The illustrative effort estimate is 36 person-days across the planned eight-week lifecycle, as shown in Table~\ref{tab:modules}; it will be reviewed with the project guide.
 
-\begin{table}[htbp]
+\begin{table}
 \centering
 \caption{Proposed System Modules and Development Allocation}
 \label{tab:modules}
@@ -676,7 +684,7 @@ The proposed system will use three deterministic processes:
   For the project catalogue, the derived BMI will be assigned to these rule-based tiers (not medical diagnoses): lower BMI band ($\text{BMI} < 18.5$, \texttt{type\_1}), middle BMI band ($18.5 \le \text{BMI} < 25.0$, \texttt{type\_2}), and upper BMI band ($\text{BMI} \ge 25.0$, \texttt{type\_3}).
   \item \textbf{Deterministic Routine Mapping Algorithm:} Given the authenticated user's body type $B \in \{1, 2, 3\}$ and age group $A \in \{1, 2, 3\}$, the system queries the associative relation:
   \begin{equation}
-    (B, A) \xrightarrow{\text{usertype\_workout\_map}} (\text{CardioTier}, \text{StrengthTier})
+    (B, A) \xrightarrow{\text{\normalsize usertype\_workout\_map}} (\mathit{CardioTier}, \mathit{StrengthTier})
   \end{equation}
   The resolved tier identifiers determine the exact schedule and diet catalogs delivered to the client.
   \item \textbf{Idempotent Daily Logging Algorithm:} When a daily log payload is received for user $U$ and calendar date $D$, the system queries \texttt{workoutplans} for the tuple $(U, D)$. The API will use the composite unique key and a transactional upsert to prevent duplicate records. The record will include or reference the applicable target values from \texttt{exercise\_data}.
@@ -688,7 +696,7 @@ The proposed system will use three deterministic processes:
 \section{Core Data Structures}
 Table~\ref{tab:structures} outlines the primary data structures across the application layers.
 
-\begin{table}[htbp]
+\begin{table}[H]
 \centering
 \caption{Principal Data Structures Across Application Layers}
 \label{tab:structures}
@@ -727,46 +735,47 @@ Figure~\ref{fig:gantt} illustrates the planned timeline and task overlaps across
 \centering
 \resizebox{\linewidth}{!}{
 \begin{tikzpicture}[x=1.05cm,y=0.55cm]
-\foreach \x in {0,...,8} {\draw[gray!35] (\x,0) -- (\x,-9.2);}
-\foreach \y in {0,...,9} {\draw[gray!25] (0,-\y) -- (8,-\y);}
-\foreach \x in {1,...,8} {\node[font=\scriptsize\bfseries] at (\x-0.5,0.35) {W\x};}
-\node[anchor=east,font=\scriptsize,align=right] at (-0.12,-0.5) {1. Requirements \& Architecture};
-\node[anchor=east,font=\scriptsize,align=right] at (-0.12,-1.5) {2. Schema \& Persistence Setup};
-\node[anchor=east,font=\scriptsize,align=right] at (-0.12,-2.5) {3. Go API \& Auth Subsystem};
-\node[anchor=east,font=\scriptsize,align=right] at (-0.12,-3.5) {4. Frontend Baseline Views};
-\node[anchor=east,font=\scriptsize,align=right] at (-0.12,-4.5) {5. Plan Engine \& Dashboard};
-\node[anchor=east,font=\scriptsize,align=right] at (-0.12,-5.5) {6. Daily Logging \& Reports};
-\node[anchor=east,font=\scriptsize,align=right] at (-0.12,-6.5) {7. Security Hardening \& Tests};
-\node[anchor=east,font=\scriptsize,align=right] at (-0.12,-7.5) {8. Packaging \& Final Report};
-\fill[green!70] (0,-0.8) rectangle (1.8,-0.2);
-\fill[gold!80] (1.0,-1.8) rectangle (2.6,-1.2);
-\fill[green!70] (1.8,-2.8) rectangle (4.5,-2.2);
-\fill[gold!80] (2.5,-3.8) rectangle (4.5,-3.2);
-\fill[green!70] (3.5,-4.8) rectangle (5.5,-4.2);
-\fill[gold!80] (4.5,-5.8) rectangle (6.5,-5.2);
-\fill[red!70] (5.8,-6.8) rectangle (7.4,-6.2);
-\fill[green!70] (6.8,-7.8) rectangle (8.0,-7.2);
-\node[anchor=west,font=\scriptsize\itshape] at (0,-8.55) {Planned 8-week execution schedule across phased development tasks.};
+\foreach \x in {0,...,8} {\draw[black!45] (\x,0) -- (\x,-9.2);}
+\foreach \y in {0,...,9} {\draw[black!45] (0,-\y) -- (8,-\y);}
+\foreach \x in {1,...,8} {\node[font=\footnotesize\bfseries] at (\x-0.5,0.35) {W\x};}
+\node[anchor=east,font=\footnotesize,align=right] at (-0.12,-0.5) {1. Requirements \& Architecture};
+\node[anchor=east,font=\footnotesize,align=right] at (-0.12,-1.5) {2. Schema \& Persistence Setup};
+\node[anchor=east,font=\footnotesize,align=right] at (-0.12,-2.5) {3. Go API \& Auth Subsystem};
+\node[anchor=east,font=\footnotesize,align=right] at (-0.12,-3.5) {4. Frontend Baseline Views};
+\node[anchor=east,font=\footnotesize,align=right] at (-0.12,-4.5) {5. Plan Engine \& Dashboard};
+\node[anchor=east,font=\footnotesize,align=right] at (-0.12,-5.5) {6. Daily Logging \& Reports};
+\node[anchor=east,font=\footnotesize,align=right] at (-0.12,-6.5) {7. Security Hardening \& Tests};
+\node[anchor=east,font=\footnotesize,align=right] at (-0.12,-7.5) {8. Packaging \& Final Report};
+\fill[black] (0,-0.8) rectangle (1.8,-0.2);
+\fill[black] (1.0,-1.8) rectangle (2.6,-1.2);
+\fill[black] (1.8,-2.8) rectangle (4.5,-2.2);
+\fill[black] (2.5,-3.8) rectangle (4.5,-3.2);
+\fill[black] (3.5,-4.8) rectangle (5.5,-4.2);
+\fill[black] (4.5,-5.8) rectangle (6.5,-5.2);
+\fill[black] (5.8,-6.8) rectangle (7.4,-6.2);
+\fill[black] (6.8,-7.8) rectangle (8.0,-7.2);
+\node[anchor=west,font=\footnotesize\itshape] at (0,-8.55) {Planned 8-week execution schedule across phased development tasks.};
 \end{tikzpicture}}
 \caption{Proposed Eight-Week Project Gantt Schedule.}
 \label{fig:gantt}
 \end{figure}
 
+\clearpage
 \section{PERT Precedence Network and Critical Path}
 Figure~\ref{fig:pert} models the task dependencies and precedence constraints. The critical path spans activities A $\rightarrow$ B $\rightarrow$ C $\rightarrow$ D $\rightarrow$ E $\rightarrow$ F $\rightarrow$ G $\rightarrow$ H, totaling 38 sequential working days. At five working days per week, this is approximately eight work weeks; the Gantt schedule uses limited task overlap and remains subject to the academic calendar.
 
 \begin{figure}[htbp]
 \centering
 \resizebox{0.94\linewidth}{!}{
-\begin{tikzpicture}[node distance=1.15cm and 1.25cm]
-\node[process] (a) {A\ Requirements\\3 days};
-\node[process,right=of a] (b) {B\ Schema Design\\5 days};
-\node[process,right=of b] (c) {C\ API Core\\9 days};
-\node[process,right=of c] (d) {D\ Frontend\\8 days};
-\node[process,right=of d] (e) {E\ Integration\\4 days};
-\node[process,right=of e] (f) {F\ Security \& Tests\\5 days};
-\node[process,right=of f] (g) {G\ Verification\\2 days};
-\node[process,right=of g] (h) {H\ Final Report\\2 days};
+\begin{tikzpicture}[node distance=0.35cm and 0.35cm]
+\node[process,minimum width=3.3cm,minimum height=1cm,font=\normalsize] (a) {A: Requirements\\[3pt]3 days};
+\node[process,right=of a,minimum width=3.3cm,minimum height=1cm,font=\normalsize] (b) {B: Schema Design\\[3pt]5 days};
+\node[process,right=of b,minimum width=3.3cm,minimum height=1cm,font=\normalsize] (c) {C: API Core\\[3pt]9 days};
+\node[process,right=of c,minimum width=3.3cm,minimum height=1cm,font=\normalsize] (d) {D: Frontend\\[3pt]8 days};
+\node[process,below=1.1cm of d,minimum width=3.3cm,minimum height=1cm,font=\normalsize] (e) {E: Integration\\[3pt]4 days};
+\node[process,left=of e,minimum width=3.3cm,minimum height=1cm,font=\normalsize] (f) {F: Security \& Tests\\[3pt]5 days};
+\node[process,left=of f,minimum width=3.3cm,minimum height=1cm,font=\normalsize] (g) {G: Verification\\[3pt]2 days};
+\node[process,left=of g,minimum width=3.3cm,minimum height=1cm,font=\normalsize] (h) {H: Final Report\\[3pt]2 days};
 \draw[relation] (a) -- (b);
 \draw[relation] (b) -- (c);
 \draw[relation] (c) -- (d);
@@ -809,15 +818,15 @@ Figure~\ref{fig:network} models the network topology and trust boundaries. The f
 
 \begin{figure}[htbp]
 \centering
-\resizebox{0.92\linewidth}{!}{
+\resizebox{\linewidth}{!}{
 \begin{tikzpicture}[node distance=1.8cm and 4cm]
 \node[entity] (browser) {Client Browser\\Static Frontend\\Host Port :8081};
 \node[process,right=of browser,minimum width=3.3cm] (api) {Go HTTP API\\ServeMux / JWT\\Host Port :8080};
 \node[store,right=of api,minimum width=3.2cm] (pg) {PostgreSQL 16\\Isolated Container\\Port :5432 / Host :5433};
-\draw[flow] (browser) -- node[midway,align=center,font=\scriptsize]{JSON over HTTP/S\\Bearer JWT Token} (api);
-\draw[softflow] (api) -- node[midway,align=center,font=\scriptsize]{SQL over private network\\TLS configured in deployment} (pg);
-\node[draw=red,dashed,rounded corners,fit=(browser)(api),inner sep=0.35cm,label=above:{\small Application Trust Boundary}] {};
-\node[draw=ink,dashed,rounded corners,fit=(pg),inner sep=0.35cm,label=below:{\small Data Persistence Boundary}] {};
+\draw[flow] (browser) -- node[midway,below=2mm,align=center,font=\footnotesize,fill=white,inner sep=2pt]{JSON / HTTP(S)\\Bearer JWT} (api);
+\draw[softflow] (api) -- node[midway,below=2mm,align=center,font=\footnotesize,fill=white,inner sep=2pt]{SQL / private network\\TLS in deployment} (pg);
+\node[draw=black,dashed,rounded corners,fit=(browser)(api),inner sep=0.35cm,label=above:{\normalsize Application Trust Boundary}] {};
+\node[draw=black,dashed,rounded corners,fit=(pg),inner sep=0.35cm,label=below:{\normalsize Data Persistence Boundary}] {};
 \end{tikzpicture}}
 \caption{Proposed Network Deployment Topology and Trust Boundaries.}
 \label{fig:network}
@@ -856,7 +865,7 @@ The planned project deliverables are:
   \item Docker and Docker Compose configuration for reproducible local database setup and optional API packaging.
   \item Automated tests for API authorization, database operations, and input bounds.
   \item Comprehensive technical documentation and a final project report detailing system evaluation.
-\end{itemize}
+\end{itemize}	
 
 \section{Conclusion}
 The Formwell personal fitness tracking and activity monitoring system represents a well-conceived, technically viable, and academically sound project. By addressing the fragmentation of personal fitness tracking through a cohesive web architecture, compiled Go API, and normalized PostgreSQL persistence, the system demonstrates key competencies in full-stack software engineering, relational database design, and web security.
@@ -890,3 +899,4 @@ Formwell project source. \emph{Backend README, Go handlers, models, and GORM dat
 \end{thebibliography}
 
 \end{document}
+`	
